@@ -1,8 +1,6 @@
 # comboDatabase
 An alternative database of combos.
 
-Combo List
-
 1. Features
    * Display game
      * Display game systems
@@ -28,7 +26,6 @@ Combo List
            * add videos of combos (youtube/nico embed link)
            * remove combos
    * logout
-
 
 2. User Stories  
    A user should be able to:
