@@ -1,0 +1,6 @@
+######################################################
+# Install Bower Components and Node Modules using the
+# JSON provided
+######################################################
+node_modules
+bower_components
