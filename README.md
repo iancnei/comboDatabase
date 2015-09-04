@@ -17,7 +17,7 @@ An alternative database of combos.
           * ~~scrape data from wikis?~~
   * sign up
   * login
-    * authorize actions for creating, edit, and remove own combos
+    * authorize actions for creating, editing, and removing their own combos
     * ~~send request for editing other's combos~~
     * ~~Create game~~
       * ~~Create characters~~
@@ -35,8 +35,8 @@ A user should be able to:
    * login
    * logout
    * when logged in
-     * create a game
-     * create a character
+     * ~~create a game~~
+     * ~~create a character~~
      * create a combo
      * edit their own combo
      * remove their own combo
@@ -51,13 +51,13 @@ A user should be able to:
    * Character
      * Combos
        * moves: string
-       * damage: string || number for comparisons?
-       * meter gain: string || number for comparisons?
-       * position: string
-       * notes: string
-       * youtube links: string
-       * ~~optimization requests~~
-         * ~~[reference to request in user] // when you log in display requests // when approced can replace the original move~~
+        * damage: string || number for comparisons?
+        * meter gain: string || number for comparisons?
+        * position: string
+        * notes: string
+        * youtube links: string
+        * ~~optimization requests~~
+          * ~~[reference to request in user] // when you log in display requests // when approced can replace the original move~~
 
 2. Users
    * name: string
