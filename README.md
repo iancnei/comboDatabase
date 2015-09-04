@@ -1,5 +1,5 @@
 # comboDatabase
-A better looking database of combos than a wiki.
+An alternative database of combos.
 
 Combo List
 
