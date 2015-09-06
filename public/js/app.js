@@ -9,11 +9,14 @@ function renderCombos(route)
 	$.get(route)
 	.done(function(data)
 	{
-		displayCombos = data.combos;
-		$(displayCombos).each(function (index, element)
+		data.forEach(function(user)
 		{
-			var $combo = $(comboTemplate(element));
-			$comboContainer.append($combo);
+			displayCombos = user.combos;
+			displayCombos.forEach(function (combo)
+			{
+				var $combo = $(comboTemplate(combo));
+				$comboContainer.append($combo);
+			});
 		});
 	});
 
@@ -21,5 +24,5 @@ function renderCombos(route)
 
 // when document is ready
 $(function () {
-	renderCombos("/api/sol");
+	renderCombos("/api/combos");
 });
