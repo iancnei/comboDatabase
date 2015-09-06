@@ -3,6 +3,11 @@ var Schema = mongoose.Schema;
 var bcrypt = require("bcrypt");
 
 var comboSchema = new Schema({
+	
+	// stretch goal: sort combos by characters per game
+	/* game: String,
+	character: String, */
+
 	moves: String,
 	damage: Number,
 	meter: Number,

@@ -31,6 +31,13 @@ var mockCombo =
 	}
 ];
 
+var mockUser = 
+{
+	email: "user@user.com",
+	passwordDigest: "password",
+	combos: mockCombo
+};
+
 app.get("/", function(req, res)
 {
 	res.sendFile(path.join(views, "home.html"));
@@ -38,7 +45,7 @@ app.get("/", function(req, res)
 
 app.get("/api/sol", function(req, res)
 {
-	res.send(mockCombo);
+	res.send(mockUser);
 });
 
 var listener = app.listen(3000, function()

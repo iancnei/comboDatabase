@@ -1,4 +1,4 @@
-function renderCombos()
+function renderCombos(route)
 {
 	var $comboContainer = $("#comboPlaceholder");
 	var comboHTML = $("#comboTemplate").html();
@@ -6,10 +6,11 @@ function renderCombos()
 
 	$comboContainer.empty();
 
-	$.get("/api/sol")
+	$.get(route)
 	.done(function(data)
 	{
-		$(data).each(function (index, element)
+		displayCombos = data.combos;
+		$(displayCombos).each(function (index, element)
 		{
 			var $combo = $(comboTemplate(element));
 			$comboContainer.append($combo);
@@ -20,5 +21,5 @@ function renderCombos()
 
 // when document is ready
 $(function () {
-	renderCombos();
+	renderCombos("/api/sol");
 });
