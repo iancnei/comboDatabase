@@ -14,6 +14,8 @@ function renderCombos(route)
 			displayCombos = user.combos;
 			displayCombos.forEach(function (combo)
 			{
+				// stretch goal: filter combos per character as well as per game
+
 				var $combo = $(comboTemplate(combo));
 				$comboContainer.append($combo);
 			});
