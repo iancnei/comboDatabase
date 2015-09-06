@@ -19,7 +19,7 @@ var comboSchema = new Schema({
 var userSchema = new Schema({
 	email: String,
 	passwordDigest: String,
-	combos: [ComboSchema]
+	combos: [comboSchema]
 });
 
 var Combo = mongoose.model("Combo", comboSchema);
