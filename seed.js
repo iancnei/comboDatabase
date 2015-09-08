@@ -37,29 +37,29 @@ var mockCombo2 =
 // 	});
 // });
 
-db.User.findOne({email: "user@site.com"}, function(err, foundUser)
-{
-	if(err)
-	{
-		return console.log(err);
-	}
-	if(foundUser !== null)
-	{
-		foundUser.combos.push(mockCombo1);
-		foundUser.save(function(err, success)
-		{
-			if(err)
-			{
-				return console.log(err);
-			}
-			console.log("Combo added:", success);
-		});
-	}
-	else
-	{
-		console.log("no user");
-	}
-});
+// db.User.findOne({email: "user@site.com"}, function(err, foundUser)
+// {
+// 	if(err)
+// 	{
+// 		return console.log(err);
+// 	}
+// 	if(foundUser !== null)
+// 	{
+// 		foundUser.combos.push(mockCombo1);
+// 		foundUser.save(function(err, success)
+// 		{
+// 			if(err)
+// 			{
+// 				return console.log(err);
+// 			}
+// 			console.log("Combo added:", success);
+// 		});
+// 	}
+// 	else
+// 	{
+// 		console.log("no user");
+// 	}
+// });
 
 // db.User.remove({}, function(err, removedUsers)
 // {
@@ -80,3 +80,10 @@ db.User.findOne({email: "user@site.com"}, function(err, foundUser)
 // 	console.log(result);
 // 	process.exit(0);
 // });
+
+db.User.find({}, function(err, foundUsers)
+{
+	if(err) return console.log(err);
+	console.log(foundUsers);
+	process.exit(0);
+})

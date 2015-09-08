@@ -17,12 +17,104 @@ app.use(session({
 
 var views = path.join(process.cwd(), 'views');
 
+app.use(function(req, res, next)
+{
+	req.signIn = function(user)
+	{
+		req.session.userId = user._id;
+	};
+
+	req.currentUser = function(cb)
+	{
+		db.User.findOne({ _id: req.session.userId}, function(err, foundUser)
+		{
+			if(err)
+			{
+				cb(err, null);	
+			} 
+			else
+			{
+				req.user = foundUser;
+				cb(null, foundUser);
+			}
+		})
+	}
+
+	req.signOut = function()
+	{
+		req.session.userId = null;
+		req.user = null;
+	}
+
+	next();
+});
+
+var views = path.join(process.cwd(), 'views');
+
 app.get("/", function(req, res)
 {
 	res.sendFile(path.join(views, "home.html"));
 });
 
-app.get("/api/combos", function(req, res)
+app.get("/signup", function(req, res)
+{
+	console.log(req.session);
+	req.currentUser(function(err, currUser)
+	{
+		if(err) console.log(err);
+		if(!currUser)
+		{
+			res.sendFile(path.join(views, "signup.html"));
+		}
+		else
+		{
+			res.redirect("/profile");
+		}
+	});
+});
+
+app.get("/signin", function(req, res)
+{
+	console.log(req.session);
+	req.currentUser(function(err, currUser)
+	{
+		if(err) console.log(err);
+		if(!currUser)
+		{
+			res.sendFile(path.join(views, "signin.html"));
+		}
+		else
+		{
+			res.redirect("/profile");
+		}
+	});
+});
+
+app.get("/profile", function(req, res)
+{
+	req.currentUser(function(err, currUser)
+	{
+		if(err) console.log(err);
+		if(!currUser)
+		{
+			res.redirect("/signin");
+		}
+		else
+		{
+			res.sendFile(path.join(views, "profile.html"));
+		}
+		// res.send("Hello " + currUser.email);
+	});
+});
+
+app.get("/signOut", function(req, res)
+{
+	req.signOut()
+	console.log(req.session);
+	res.sendStatus(200);
+})
+
+app.get("/combos", function(req, res)
 {
 	db.User.find({}, function(err, foundUsers)
 	{
@@ -34,7 +126,7 @@ app.get("/api/combos", function(req, res)
 	})	
 });
 
-app.post("/api/signup", function(req, res)
+app.post("/signup", function(req, res)
 {
 	newUser = req.body;
 	db.User.createSecure(newUser.email, newUser.password, function(err, createdUser)
@@ -50,12 +142,14 @@ app.post("/api/signup", function(req, res)
 			// {
 			// 	res.send(foundUsers);
 			// });
-			res.send(newUser.email + "'s account was created.");
+			req.signIn(createdUser);
+			console.log(req.session);
+			res.sendStatus(200);
 		}
 	});
 });
 
-app.post("/api/signin", function(req, res)
+app.post("/signin", function(req, res)
 {
 	user = req.body;
 	db.User.authenticate(user.email, user.password, function(err, authUser)
@@ -67,7 +161,10 @@ app.post("/api/signin", function(req, res)
 		}
 		else
 		{
-			res.send("sign in successful");
+			req.signIn(authUser);
+			// res.redirect("/profile");
+			console.log(req.session);
+			res.sendStatus(200);
 		}
 	});
 });

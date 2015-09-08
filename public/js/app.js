@@ -25,16 +25,20 @@ function renderCombos(route)
 
 // when document is ready
 $(function () {
-	renderCombos("/api/combos");
+	renderCombos("/combos");
+	$("#signOutBox").hide();
 
 	$("#signInBox").on("submit", function(e)
 	{
 		e.preventDefault();
-		$.post("/api/signin", $(this).serialize())
+		$.post("/signin", $(this).serialize())
 		.done(
 			function(response)
 			{
-				$("#signInBox").append("Signed In.");
+				$("#signInBox").hide();
+				$("#signUpBox").hide();
+				$("#signOutBox").prepend('<p>Signed In</p>');
+				$("#signOutBox").show();
 				$("#signInBox")[0].reset();
 			});
 	});
@@ -42,12 +46,27 @@ $(function () {
 	$("#signUpBox").on("submit", function(e)
 	{
 		e.preventDefault();
-		$.post("/api/signup", $(this).serialize())
-		.done(
-			function(response)
+		$.post("/signup", $(this).serialize())
+		.done(function(response)
 			{
-				$("#signUpBox").append("Signed Up.");
+				$("#signInBox").hide();
+				$("#signUpBox").hide();
+				$("#signOutBox").prepend('<p>Signed Up</p>');
+				$("#signOutBox").show();
 				$("#signUpBox")[0].reset();
+			});
+	});
+
+	$("#signOutBox").on("submit", function(e)
+	{
+		e.preventDefault();
+		$.get("/signout")
+		.done(function()
+			{
+				$("#signInBox").show();
+				$("#signUpBox").show();
+				$("#signOutBox").hide();
+				$("#signOutBox p").remove();
 			});
 	});
 });
