@@ -60,12 +60,18 @@ app.get("/", function(req, res)
 	res.sendFile(path.join(views, "home.html"));
 });
 
+// authenticate cookie against database
+// app.get("/api/rememberMe", function(req, res)
+// {
+
+// });
+
 app.get("/api/signOut", function(req, res)
 {
 	req.signOut()
 	console.log(req.session);
 	res.sendStatus(200);
-})
+});
 
 app.get("/api/combos", function(req, res)
 {
