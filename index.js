@@ -21,6 +21,13 @@ app.use(function(req, res, next)
 {
 	req.signIn = function(user)
 	{
+		if(req.cookies !== undefined)
+		{
+			if(req.cookies.session)
+			{
+				res.cookie("session", user._id, { expires: 7, path: "/"});
+			}
+		}
 		req.session.userId = user._id;
 	};
 
@@ -42,6 +49,7 @@ app.use(function(req, res, next)
 
 	req.signOut = function()
 	{
+		res.clearCookie("session");
 		req.session.userId = null;
 		req.user = null;
 	}
