@@ -27,4 +27,6 @@ function renderCombos(route)
 // when document is ready
 $(function () {
 	renderCombos("/api/combos");
+
+	// catch sign in / sign up button presses
 });

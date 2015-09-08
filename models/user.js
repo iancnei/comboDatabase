@@ -28,7 +28,7 @@ var userSchema = new Schema(
 	combos: [comboSchema]
 });
 
-userSchema.statics.create = function(email, password, cb)
+userSchema.statics.createSecure = function(email, password, cb)
 {
 	var _this = this;
 	bcrypt.genSalt(11, function(err, salt)
@@ -41,7 +41,7 @@ userSchema.statics.create = function(email, password, cb)
 				email: email,
 				passwordDigest: digest
 			};
-			
+
 			if(err) cb(err, null);
 			_this.create(newUser, function(err, createdUser)
 			{
@@ -82,14 +82,7 @@ userSchema.statics.authenticate = function(email, password, cb)
 
 userSchema.methods.checkPassword = function(password)
 {
-	bcrypt.compare(password, this.passwordDigest, function(err, result)
-	{
-		if(err)
-		{
-			return console.log(err);
-		}
-		return result;
-	});
+	return bcrypt.compareSync(password, this.passwordDigest);
 }
 
 var Combo = mongoose.model("Combo", comboSchema);
