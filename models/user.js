@@ -20,7 +20,7 @@ var userSchema = new Schema({
 
 	// stretch goal: include user names
 	// username: String,
-	
+
 	email: String,
 	passwordDigest: String,
 	combos: [comboSchema]
@@ -52,7 +52,20 @@ userSchema.statics.create = function(email, password, cb)
 
 userSchema.statics.authenticate = function(email, password, cb)
 {
+	
+}
 
+userSchema.methods.checkPassword = function(password)
+{
+	bcrypt.compare(password, this.passwordDigest, function(err, result)
+		{
+			if(err)
+			{
+				return console.log(err);
+			}
+			return result;
+		}
+	);
 }
 
 var Combo = mongoose.model("Combo", comboSchema);
