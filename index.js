@@ -21,13 +21,9 @@ app.use(function(req, res, next)
 {
 	req.signIn = function(user)
 	{
-		if(req.cookies !== undefined)
-		{
-			if(req.cookies.session)
-			{
-				res.cookie("session", user._id, { expires: 7, path: "/"});
-			}
-		}
+		var date = new Date();
+		date.setDate(date.getDate() + 7);
+		res.cookie("session", user._id, { expires: date, path: "/"});
 		req.session.userId = user._id;
 	};
 
@@ -64,57 +60,6 @@ app.get("/", function(req, res)
 	res.sendFile(path.join(views, "home.html"));
 });
 
-// app.get("/signup", function(req, res)
-// {
-// 	console.log(req.session);
-// 	req.currentUser(function(err, currUser)
-// 	{
-// 		if(err) console.log(err);
-// 		if(!currUser)
-// 		{
-// 			res.sendFile(path.join(views, "signup.html"));
-// 		}
-// 		else
-// 		{
-// 			res.redirect("/profile");
-// 		}
-// 	});
-// });
-
-// app.get("/signin", function(req, res)
-// {
-// 	console.log(req.session);
-// 	req.currentUser(function(err, currUser)
-// 	{
-// 		if(err) console.log(err);
-// 		if(!currUser)
-// 		{
-// 			// res.sendFile(path.join(views, "signin.html"));
-// 		}
-// 		else
-// 		{
-// 			// res.redirect("/profile");
-// 		}
-// 	});
-// });
-
-// app.get("/profile", function(req, res)
-// {
-// 	req.currentUser(function(err, currUser)
-// 	{
-// 		if(err) console.log(err);
-// 		if(!currUser)
-// 		{
-// 			res.redirect("/signin");
-// 		}
-// 		else
-// 		{
-// 			res.sendFile(path.join(views, "profile.html"));
-// 		}
-// 		// res.send("Hello " + currUser.email);
-// 	});
-// });
-
 app.get("/api/signOut", function(req, res)
 {
 	req.signOut()
@@ -134,7 +79,7 @@ app.get("/api/combos", function(req, res)
 	})	
 });
 
-app.post("/api/signup", function(req, res)
+app.post("/api/signUp", function(req, res)
 {
 	newUser = req.body;
 	db.User.createSecure(newUser.email, newUser.password, function(err, createdUser)
@@ -157,7 +102,7 @@ app.post("/api/signup", function(req, res)
 	});
 });
 
-app.post("/api/signin", function(req, res)
+app.post("/api/signIn", function(req, res)
 {
 	user = req.body;
 	db.User.authenticate(user.email, user.password, function(err, authUser)

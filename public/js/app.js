@@ -23,33 +23,25 @@ function renderCombos(route)
 	});
 }
 
-// function displayAuth(type)
-// {
-// 	if(type === "in")
-// 	{
-// 		$("#signInBox p").remove();
-// 		$("#signInBox").show();
-// 		$("#signUpBox").hide();
-// 		$("#signOutBox").hide();
-// 		$("#signOutBox").prepend('<p>Signed In</p>');
-// 		$("#signInBox")[0].reset();
-// 	}
-// 	else if(type === "up")
-// 	{
-// 		$("#signUpBox").show();
-// 		$("#signInBox").hide();
-// 		$("#signOutBox").hide();
-// 		$("#signOutBox").prepend('<p>Signed Up</p>');
-// 		$("#signUpBox")[0].reset();
-// 	}
-// 	else if(type === "out")
-// 	{
-// 		$("#signOutBox").show();
-// 		$("#signInBox").hide();
-// 		$("#signUpBox").hide();
-// 		$("#signOutBox p").remove();
-// 	}
-// }
+function displayAuth(state)
+{
+	if(state === "out")
+	{
+		$("#signInForm p").remove();
+		$("#signInButton").show();
+		$("#signUpButton").show();
+		$("#signOutButton").hide();
+		$("#signInForm")[0].reset();
+		$("#signUpForm")[0].reset();
+	}
+	else if(state === "in")
+	{
+		$("#signOutButton").show();
+		$("#signInButton").hide();
+		$("#signUpButton").hide();
+		$("#signOutForm p").remove();
+	}
+}
 
 // if a 401 (not authorized) request is ever sent, tell the user to login
 $(document).ajaxError(function(e,res){
@@ -62,62 +54,61 @@ $(document).ajaxError(function(e,res){
 $(function () {
 	renderCombos("/api/combos");
 
-	if($.cookie("session") === undefined)
+	if($.cookie("session") === undefined || $.cookie("session") === "foo")
 	{
-		// displayAuth("in");
-		$("#signOutModalButton").hide();
+		displayAuth("out");
 	}
 	else
 	{
-		// displayAuth("out");
-		$("#signInModalButton").hide();
-		$("#signUpModalButton").hide();
+		displayAuth("in");
 	}
 	
-	$("#signInButton").on("click", function(e)
+	$("#signInForm").on("submit", function(e)
 	{
 		e.preventDefault();
-		$("#signInModal").modal("hide");
 
-		if($("#rememberMe").prop("checked"))
-		{
-			$.cookie("session", "foo");
-		}
-
-		$.post("/api/signin", $("#signInForm").serialize())
+		$.post("/api/signIn", $("#signInForm").serialize())
 		.done(
 			function(response)
 			{
-				// displayAuth("out");
+				$("#signInModal").modal("hide");
+				displayAuth("in");
+
+				if(!$("#rememberMe").prop("checked"))
+				{
+					$.removeCookie('session');
+				}
 			})
 		.fail(
 			function(response)
 			{
-				$("#signInBox p").remove();
-				$("#signInBox").append("<p>Incorrect Username or Password.</p>");
+				$("#signInForm p").remove();
+				$("#signInForm").append("<p>Incorrect Username or Password.</p>");
 			});
 	});
 
 	$("#signUpForm").on("submit", function(e)
 	{
 		e.preventDefault();
-		$("#signUpModal").modal("hide");
 
-		$.post("/api/signup", $(this).serialize())
+		$.post("/api/signUp", $(this).serialize())
 		.done(function(response)
 			{
-				// displayAuth("out");
+				$("#signUpModal").modal("hide");
+				displayAuth("in");
+
+				$.removeCookie('session');
 			});
 	});
 
-	$("#signOutForm").on("submit", function(e)
+	$("#signOutButton").on("click", function(e)
 	{
 		e.preventDefault();
 
-		$.get("/api/signout")
+		$.get("/api/signOut")
 		.done(function()
 			{
-				// displayAuth("in");
+				displayAuth("out");
 			});
 	});
 });
