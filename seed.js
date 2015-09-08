@@ -26,22 +26,57 @@ var mockCombo2 =
 // 	{
 // 		return console.log(err);
 // 	}
+// 	db.User.create(mockUsers, function(err, createdUsers)
+// 	{
+// 		if(err)
+// 		{
+// 			return console.log(err);
+// 		}
+// 		console.log("Created users:\n", createdUsers);
+// 		process.exit(0);
+// 	});
+// });
+
+db.User.findOne({email: "user@site.com"}, function(err, foundUser)
+{
+	if(err)
+	{
+		return console.log(err);
+	}
+	if(foundUser !== null)
+	{
+		foundUser.combos.push(mockCombo1);
+		foundUser.save(function(err, success)
+		{
+			if(err)
+			{
+				return console.log(err);
+			}
+			console.log("Combo added:", success);
+		});
+	}
+	else
+	{
+		console.log("no user");
+	}
+});
+
+// db.User.remove({}, function(err, removedUsers)
+// {
+// 	if(err)
+// 	{
+// 		return console.log(err);
+// 	}
 // 	db.User.createSecure("user@site.com", "secure", function(err, createdUser)
 // 	{
 // 		if(err) return console.log(err);
 // 		console.log("created 'user@site.com' with password 'secure'.\n", createdUser);
 // 	});
-// 	db.User.createSecure("user@site.com1", "secure1", function(err, createdUser)
-// 	{
-// 		if(err) return console.log(err);
-// 		console.log("created 'user@site.com1' with password 'secure1'.\n", createdUser);
-// 		process.exit(0);
-// 	});
 // });
 
-db.User.authenticate("user@site.com1", "secure", function(err, result)
-{
-	if(err) return console.log(err);
-	console.log(result);
-	process.exit(0);
-});
+// db.User.authenticate("user@site.com", "secure", function(err, result)
+// {
+// 	if(err) return console.log(err);
+// 	console.log(result);
+// 	process.exit(0);
+// });

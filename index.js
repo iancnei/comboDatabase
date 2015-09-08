@@ -17,8 +17,6 @@ app.use(session({
 
 var views = path.join(process.cwd(), 'views');
 
-
-
 app.get("/", function(req, res)
 {
 	res.sendFile(path.join(views, "home.html"));
@@ -36,7 +34,45 @@ app.get("/api/combos", function(req, res)
 	})	
 });
 
+app.post("/api/signup", function(req, res)
+{
+	newUser = req.body;
+	db.User.createSecure(newUser.email, newUser.password, function(err, createdUser)
+	{
+		if(err)
+		{
+			console.log(err);
+			res.sendStatus(422);
+		}
+		else
+		{
+			// db.User.find({}, function(err, foundUsers)
+			// {
+			// 	res.send(foundUsers);
+			// });
+			res.send(newUser.email + "'s account was created.");
+		}
+	});
+});
+
+app.post("/api/signin", function(req, res)
+{
+	user = req.body;
+	db.User.authenticate(user.email, user.password, function(err, authUser)
+	{
+		if(err) 
+		{
+			console.log(err);
+			res.sendStatus(422);
+		}
+		else
+		{
+			res.send("sign in successful");
+		}
+	});
+});
+
 var listener = app.listen(3000, function()
 {
 	console.log("Listening on port " + listener.address().port);
-});
+});	

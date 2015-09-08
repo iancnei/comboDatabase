@@ -80,6 +80,26 @@ userSchema.statics.authenticate = function(email, password, cb)
 	});
 }
 
+userSchema.statics.createCombo = function(wantedUser, combo, cb)
+{
+	this.findOne(wantedUser, function(err, foundUser)
+	{
+		foundUser.combos.push(combo);
+		foundUser.save(function(err, success)
+		{
+			if(err) cb(err, null);
+			if(success)
+			{
+				cb(null, foundUser);
+			}
+			else
+			{
+				cb("Combo not added successfully.", null);
+			}
+		});
+	});
+}
+
 userSchema.methods.checkPassword = function(password)
 {
 	return bcrypt.compareSync(password, this.passwordDigest);

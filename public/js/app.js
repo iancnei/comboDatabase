@@ -21,12 +21,33 @@ function renderCombos(route)
 			});
 		});
 	});
-
 }
 
 // when document is ready
 $(function () {
 	renderCombos("/api/combos");
 
-	// catch sign in / sign up button presses
+	$("#signInBox").on("submit", function(e)
+	{
+		e.preventDefault();
+		$.post("/api/signin", $(this).serialize())
+		.done(
+			function(response)
+			{
+				$("#signInBox").append("Signed In.");
+				$("#signInBox")[0].reset();
+			});
+	});
+
+	$("#signUpBox").on("submit", function(e)
+	{
+		e.preventDefault();
+		$.post("/api/signup", $(this).serialize())
+		.done(
+			function(response)
+			{
+				$("#signUpBox").append("Signed Up.");
+				$("#signUpBox")[0].reset();
+			});
+	});
 });
