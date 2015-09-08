@@ -9,6 +9,11 @@ var app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 app.use("/static", express.static("public"));
 app.use("/vendor", express.static("bower_components"));
+app.use(session({
+	secret: "aknownpubliclock",
+	resave: false,
+	saveUninitialized: true
+}));
 
 var views = path.join(process.cwd(), 'views');
 
