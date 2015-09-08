@@ -23,81 +23,101 @@ function renderCombos(route)
 	});
 }
 
-function displayAuth(type)
-{
-	if(type === "in")
-	{
-		$("#signInBox").show();
-		$("#signUpBox").hide();
-		$("#signOutBox").hide();
-	}
-	else if(type === "up")
-	{
-		$("#signUpBox").show();
-		$("#signInBox").hide();
-		$("#signOutBox").hide();
-	}
-	else if(type === "out")
-	{
-		$("#signOutBox").show();
-		$("#signInBox").hide();
-		$("#signUpBox").hide();
-	}
-}
+// function displayAuth(type)
+// {
+// 	if(type === "in")
+// 	{
+// 		$("#signInBox p").remove();
+// 		$("#signInBox").show();
+// 		$("#signUpBox").hide();
+// 		$("#signOutBox").hide();
+// 		$("#signOutBox").prepend('<p>Signed In</p>');
+// 		$("#signInBox")[0].reset();
+// 	}
+// 	else if(type === "up")
+// 	{
+// 		$("#signUpBox").show();
+// 		$("#signInBox").hide();
+// 		$("#signOutBox").hide();
+// 		$("#signOutBox").prepend('<p>Signed Up</p>');
+// 		$("#signUpBox")[0].reset();
+// 	}
+// 	else if(type === "out")
+// 	{
+// 		$("#signOutBox").show();
+// 		$("#signInBox").hide();
+// 		$("#signUpBox").hide();
+// 		$("#signOutBox p").remove();
+// 	}
+// }
+
+// if a 401 (not authorized) request is ever sent, tell the user to login
+$(document).ajaxError(function(e,res){
+  if (res.status === 401) {
+     alert(res.status, res.statusText, "please login...");
+  }
+});
 
 // when document is ready
 $(function () {
-	renderCombos("/combos");
+	renderCombos("/api/combos");
+
 	if($.cookie("session") === undefined)
 	{
-		displayAuth("in");
+		// displayAuth("in");
+		$("#signOutModalButton").hide();
 	}
 	else
 	{
-		displayAuth("out");
+		// displayAuth("out");
+		$("#signInModalButton").hide();
+		$("#signUpModalButton").hide();
 	}
 	
-
-	$("#signInBox").on("submit", function(e)
+	$("#signInButton").on("click", function(e)
 	{
 		e.preventDefault();
+		$("#signInModal").modal("hide");
 
 		if($("#rememberMe").prop("checked"))
 		{
 			$.cookie("session", "foo");
 		}
 
-		$.post("/signin", $(this).serialize())
+		$.post("/api/signin", $("#signInForm").serialize())
 		.done(
 			function(response)
 			{
-				displayAuth("out");
-				$("#signOutBox").prepend('<p>Signed In</p>');
-				$("#signInBox")[0].reset();
+				// displayAuth("out");
+			})
+		.fail(
+			function(response)
+			{
+				$("#signInBox p").remove();
+				$("#signInBox").append("<p>Incorrect Username or Password.</p>");
 			});
 	});
 
-	$("#signUpBox").on("submit", function(e)
+	$("#signUpForm").on("submit", function(e)
 	{
 		e.preventDefault();
+		$("#signUpModal").modal("hide");
 
-		$.post("/signup", $(this).serialize())
+		$.post("/api/signup", $(this).serialize())
 		.done(function(response)
 			{
-				displayAuth("out");
-				$("#signOutBox").prepend('<p>Signed Up</p>');
-				$("#signUpBox")[0].reset();
+				// displayAuth("out");
 			});
 	});
 
-	$("#signOutBox").on("submit", function(e)
+	$("#signOutForm").on("submit", function(e)
 	{
 		e.preventDefault();
-		$.get("/signout")
+
+		$.get("/api/signout")
 		.done(function()
 			{
-				displayAuth("in");
-				$("#signOutBox p").remove();
+				// displayAuth("in");
 			});
 	});
 });
