@@ -120,6 +120,44 @@
 			</div>
 		</div>
 
+		<div class="modal fade" id="editComboModal" tabindex="-1" role="dialog" aria-labelledby="editComboModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<form id="editComboForm">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title" id="editComboModalLabel">Edit a Combo</h4>
+						</div>
+						<div class="modal-body">
+							<h2 class="text-center">Prune a Flower in God's Garden</h2>
+							<br>
+							<div class="form-group">
+								<input type="text" class="form-control" id="editComboMoves" placeholder="Combo" name="moves" required >
+							</div>
+							<div>
+								<input type="text" class="form-control" id="editComboDamage" placeholder="Damage" name="damage" >
+							</div>
+							<div>
+								<input type="text" class="form-control" id="editComboMeter" placeholder="Meter" name="meter">
+							</div>
+							<div>
+								<input type="text" class="form-control" id="editComboPosition" placeholder="Position" name="position">
+							</div>
+							<div>
+								<input type="text" class="form-control" id="editComboNotes" placeholder="Notes" name="notes">
+							</div>
+							<div>
+								<input type="text" class="form-control" id="editComboLink" placeholder="Link" name="link">
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-default">Add Combo</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
 		</br>
 	
 		<button type="button" class="btn btn-primary" id="addComboButton" data-toggle="modal" data-target="#addComboModal">Add Combo</button>
@@ -131,7 +169,7 @@
 			<script type="text/template" id="comboTemplate">
 				<hr>
 				<div>
-					<%= position ? position : "Position"%> <button type="button" class="btn btn-primary" id=<%= _id %>Button>Edit Combo</button></br>
+					<%= position ? position : "Position"%> <button type="button" class="btn btn-primary" id=<%= _id %> onclick="return populateEditForm(this.id)">Edit Combo</button></br>
 					<%= moves %> | <%= damage ? damage : "Damage"%> / <%= meter ? meter : "Meter"%></br>
 					<%= notes ? notes : "notes"%></br>
 					<% if(link) { %>

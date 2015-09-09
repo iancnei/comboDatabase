@@ -81,11 +81,40 @@ app.get("/api/combos", function(req, res)
 	{
 		if(err)
 		{
-			return console.log(err);
+			console.log(err);
+			res.sendStatus(500);
 		}
 		res.send(foundUsers);
 	})	
 });
+
+app.get("/api/combos/:id", function(req, res)
+{
+	var wantedId = req.params.id;
+
+	db.User.find({}, function(err, foundUsers)
+	{
+		if(err)
+		{
+			console.log(err);
+			res.sendStatus(500);
+		}
+		else
+		{
+			foundUsers.forEach(function(user)
+			{
+				user.combos.forEach(function(combo)
+				{
+					if(combo._id.toString() === wantedId)
+					{
+						console.log(combo);
+						res.send(combo);
+					}
+				});
+			});
+		}
+	})
+})
 
 app.post("/api/signUp", function(req, res)
 {

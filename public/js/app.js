@@ -23,6 +23,39 @@ function renderCombos(route)
 	});
 }
 
+function populateEditForm(comboId)
+{
+	$.get("/api/combos/" + comboId)
+	.done(function(data)
+	{
+		if(data.moves)
+		{
+			$("#editComboMoves").val(data.moves);
+		}
+		if(data.damage)
+		{
+			$("#editComboDamage").val(data.damage);
+		}
+		if(data.meter)
+		{
+			$("#editComboMeter").val(data.meter);
+		}
+		if(data.position)
+		{
+			$("#editComboPosition").val(data.position);
+		}
+		if(data.notes)
+		{
+			$("#editComboNotes").val(data.notes);
+		}
+		if(data.link)
+		{
+			$("#editComboLink").val(data.link);
+		}
+		$("#editComboModal").modal("show");
+	});
+}
+
 function displayAuth(state)
 {
 	if(state === "out")
