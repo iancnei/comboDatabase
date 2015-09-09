@@ -46,7 +46,7 @@ function displayAuth(state)
 // if a 401 (not authorized) request is ever sent, tell the user to login
 $(document).ajaxError(function(e,res){
   if (res.status === 401) {
-     alert(res.status, res.statusText, "please login...");
+     alert("Please Sign In.");
   }
 });
 
@@ -116,7 +116,7 @@ $(function () {
 	{
 		e.preventDefault();
 
-		$.post("/api/combos", $(this).serialize())
+		$.post("/api/newCombo", $(this).serialize())
 		.done(function(response)
 		{
 			$("#addComboModal").modal("hide");

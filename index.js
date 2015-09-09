@@ -130,7 +130,7 @@ app.post("/api/signIn", function(req, res)
 	});
 });
 
-app.post("/api/combos", function(req, res)
+app.post("/api/newCombo", function(req, res)
 {
 	req.currentUser(function(err, currUser)
 	{
@@ -148,7 +148,7 @@ app.post("/api/combos", function(req, res)
 			else
 			{
 				combo = req.body;
-				db.User.createCombo(currUser.email, combo, function(err, userCombo)
+				db.User.createCombo(currUser, combo, function(err, userCombo)
 				{
 					if(err)
 					{
