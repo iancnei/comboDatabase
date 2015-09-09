@@ -107,11 +107,11 @@ app.get("/api/combos/:id", function(req, res)
 				{
 					if(combo._id.toString() === wantedId)
 					{
-						console.log(combo);
 						res.send(combo);
 					}
 				});
 			});
+			res.sendStatus(500);
 		}
 	})
 })
@@ -193,6 +193,22 @@ app.post("/api/newCombo", function(req, res)
 		}
 	});
 });
+
+app.put("/api/combo/:id", function(req, res)
+{
+	var updatedCombo = req.body;
+
+	db.User.find({}, function(err, foundUsers)
+	{
+		foundUsers.forEach(function(combos)
+		{
+			combos.forEach(function(combo)
+			{
+				 
+			})
+		})
+	})
+})
 
 var listener = app.listen(3000, function()
 {

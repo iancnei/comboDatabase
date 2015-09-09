@@ -56,6 +56,23 @@ function populateEditForm(comboId)
 	});
 }
 
+function sendEdit(context)
+{
+	var comboId = context.id;
+	var newCombo = $("#editComboForm").serialize();
+
+	$.ajax(
+	{
+		url: '/api/combos/' + comboId,
+		type: 'PUT',
+		data: newCombo,
+		success: function(res)
+		{
+			renderCombos();
+		}
+	});
+}
+
 function displayAuth(state)
 {
 	if(state === "out")
@@ -156,5 +173,4 @@ $(function () {
 			renderCombos("/api/combos");
 		})
 	});
-
 });
