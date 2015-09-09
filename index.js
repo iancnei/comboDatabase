@@ -4,13 +4,15 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var path = require('path');
 var db = require("./models");
+// add in keygenerator of secret
+
 
 var app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 app.use("/static", express.static("public"));
 app.use("/vendor", express.static("bower_components"));
 app.use(session({
-	secret: "aknownpubliclock",
+	secret: "aknownpubliclock", 
 	resave: false,
 	saveUninitialized: true
 }));
@@ -124,6 +126,41 @@ app.post("/api/signIn", function(req, res)
 			// res.redirect("/profile");
 			console.log(req.session);
 			res.sendStatus(200);
+		}
+	});
+});
+
+app.post("/api/combos", function(req, res)
+{
+	req.currentUser(function(err, currUser)
+	{
+		if(err)
+		{
+			console.log(err);
+			res.sendStatus(422);
+		}
+		else
+		{
+			if(!currUser)
+			{
+				res.sendStatus(401);
+			}
+			else
+			{
+				combo = req.body;
+				db.User.createCombo(currUser.email, combo, function(err, userCombo)
+				{
+					if(err)
+					{
+						console.log(err);
+						res.sendStatus(422);
+					}
+					else
+					{
+						res.sendStatus(200);
+					}
+				})
+			}
 		}
 	});
 });

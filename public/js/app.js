@@ -111,4 +111,17 @@ $(function () {
 				displayAuth("out");
 			});
 	});
+
+	$("#addComboForm").on("submit", function(e)
+	{
+		e.preventDefault();
+
+		$.post("/api/combos", $(this).serialize())
+		.done(function(response)
+		{
+			$("#addComboModal").modal("hide");
+			renderCombos("/api/combos");
+		})
+	});
+
 });

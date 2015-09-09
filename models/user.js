@@ -80,9 +80,9 @@ userSchema.statics.authenticate = function(email, password, cb)
 	});
 }
 
-userSchema.statics.createCombo = function(wantedUser, combo, cb)
+userSchema.statics.createCombo = function(email, combo, cb)
 {
-	this.findOne(wantedUser, function(err, foundUser)
+	this.findOne(email, function(err, foundUser)
 	{
 		foundUser.combos.push(combo);
 		foundUser.save(function(err, success)

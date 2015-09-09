@@ -81,6 +81,34 @@ var mockCombo2 =
 // 	process.exit(0);
 // });
 
+// db.User.createCombo("user@site.com", mockCombo1, function(err, userCombo)
+// {
+// 	if(err)
+// 	{
+// 		console.log(err);
+// 		process.exit(0);
+// 	}
+// 	else
+// 	{
+// 		console.log(userCombo);
+// 		process.exit(0);
+// 	}
+// })
+
+// db.User.createCombo("user@site.com", mockCombo2, function(err, userCombo)
+// {
+// 	if(err)
+// 	{
+// 		console.log(err);
+// 		process.exit(0);
+// 	}
+// 	else
+// 	{
+// 		console.log(userCombo);
+// 		process.exit(0);
+// 	}
+// })
+
 db.User.find({}, function(err, foundUsers)
 {
 	if(err) return console.log(err);
