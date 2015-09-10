@@ -59,11 +59,7 @@ var views = path.join(process.cwd(), 'views');
 
 app.get("/", function(req, res)
 {
-	res.sendFile(path.join(views, "home.html"));
-	// if(res.cookie("session") !== undefined || res.cookie("session") !== "foo")
-	// {
-	// 	req.session.userId = user._id;
-	// }
+	res.sendFile( "/app/views/home.html" || (path.join(views, "home.html")));
 });
 
 // authenticate cookie against database
