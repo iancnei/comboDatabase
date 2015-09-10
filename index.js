@@ -59,7 +59,7 @@ var views = path.join(process.cwd(), 'views');
 
 app.get("/", function(req, res)
 {
-	res.sendFile( "/app/views/home.html" || (path.join(views, "home.html")));
+	res.sendFile( (path.join(views, "home.html")) || "/app/views/home.html");
 });
 
 // authenticate cookie against database
