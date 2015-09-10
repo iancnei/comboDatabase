@@ -1,6 +1,5 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-// var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var path = require('path');
 var db = require("./models");
@@ -319,7 +318,7 @@ app.delete("/api/combos/:id", function(req, res)
 	});
 });
 
-var listener = app.listen(3000, function()
+var listener = app.listen(process.env.PORT || 3000, function()
 {
 	console.log("Listening on port " + listener.address().port);
 });	
