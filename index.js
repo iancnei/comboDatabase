@@ -195,39 +195,57 @@ app.post("/api/newCombo", function(req, res)
 
 app.put("/api/combos/:id", function(req, res)
 {
-	var updatedCombo = req.body;
-	var wantedId = req.params.id;
-
-	db.User.find({}, function(err, foundUsers)
+	req.currentUser(function(err, currUser)
 	{
-		foundUsers.forEach(function(user)
+		if(err)
 		{
-			user.combos.forEach(function(combo)
+			console.log(err);
+			res.sendStatus(422);
+		}
+		else
+		{
+			if(!currUser)
 			{
-				if(combo._id.toString() === wantedId)
+				res.sendStatus(401);
+			}
+			else
+			{
+				var updatedCombo = req.body;
+				var wantedId = req.params.id;
+
+				db.User.find({}, function(err, foundUsers)
 				{
-					combo.moves = updatedCombo.moves;
-					combo.damage = updatedCombo.damage;
-					combo.meter = updatedCombo.meter;
-					combo.position = updatedCombo.position;
-					combo.notes = updatedCombo.notes;
-					combo.link = updatedCombo.link;
-					user.save(function(err, success)
+					foundUsers.forEach(function(user)
 					{
-						if(err)
+						user.combos.forEach(function(combo)
 						{
-							console.log(err);
-							res.sendStatus(500);
-						}
-						else
-						{
-							console.log(combo);
-							res.sendStatus(200);
-						}
+							if(combo._id.toString() === wantedId)
+							{
+								combo.moves = updatedCombo.moves;
+								combo.damage = updatedCombo.damage;
+								combo.meter = updatedCombo.meter;
+								combo.position = updatedCombo.position;
+								combo.notes = updatedCombo.notes;
+								combo.link = updatedCombo.link;
+								user.save(function(err, success)
+								{
+									if(err)
+									{
+										console.log(err);
+										res.sendStatus(500);
+									}
+									else
+									{
+										// console.log(combo);
+										res.sendStatus(200);
+									}
+								});
+							}
+						});
 					});
-				}
-			})
-		})
+				});
+			}
+		}
 	})
 })
 
