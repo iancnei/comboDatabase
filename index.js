@@ -111,7 +111,6 @@ app.get("/api/combos/:id", function(req, res)
 					}
 				});
 			});
-			res.sendStatus(500);
 		}
 	})
 })
@@ -194,17 +193,39 @@ app.post("/api/newCombo", function(req, res)
 	});
 });
 
-app.put("/api/combo/:id", function(req, res)
+app.put("/api/combos/:id", function(req, res)
 {
 	var updatedCombo = req.body;
+	var wantedId = req.params.id;
 
 	db.User.find({}, function(err, foundUsers)
 	{
-		foundUsers.forEach(function(combos)
+		foundUsers.forEach(function(user)
 		{
-			combos.forEach(function(combo)
+			user.combos.forEach(function(combo)
 			{
-				 
+				if(combo._id.toString() === wantedId)
+				{
+					combo.moves = updatedCombo.moves;
+					combo.damage = updatedCombo.damage;
+					combo.meter = updatedCombo.meter;
+					combo.position = updatedCombo.position;
+					combo.notes = updatedCombo.notes;
+					combo.link = updatedCombo.link;
+					user.save(function(err, success)
+					{
+						if(err)
+						{
+							console.log(err);
+							res.sendStatus(500);
+						}
+						else
+						{
+							console.log(combo);
+							res.sendStatus(200);
+						}
+					});
+				}
 			})
 		})
 	})

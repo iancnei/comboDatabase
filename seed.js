@@ -20,23 +20,6 @@ var mockCombo2 =
 	link: "https://www.youtube.com/embed/BrmZ4leC1Pc?start=54"
 }
 
-// db.User.remove({}, function(err, removedUsers)
-// {
-// 	if(err)
-// 	{
-// 		return console.log(err);
-// 	}
-// 	db.User.create(mockUsers, function(err, createdUsers)
-// 	{
-// 		if(err)
-// 		{
-// 			return console.log(err);
-// 		}
-// 		console.log("Created users:\n", createdUsers);
-// 		process.exit(0);
-// 	});
-// });
-
 // db.User.findOne({email: "user@site.com"}, function(err, foundUser)
 // {
 // 	if(err)

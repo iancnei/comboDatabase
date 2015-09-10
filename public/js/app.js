@@ -1,14 +1,16 @@
 function renderCombos(route)
 {
+
 	var $comboContainer = $("#comboPlaceholder");
 	var comboHTML = $("#comboTemplate").html();
 	var comboTemplate = _.template(comboHTML);
 
 	$comboContainer.empty();
 
-	$.get(route)
+	$.get(route ? route : "/api/combos")
 	.done(function(data)
 	{
+		// console.log(data);
 		data.forEach(function(user)
 		{
 			displayCombos = user.combos;
@@ -25,9 +27,13 @@ function renderCombos(route)
 
 function populateEditForm(comboId)
 {
+	var newId = "="+comboId;
+
 	$.get("/api/combos/" + comboId)
 	.done(function(data)
 	{
+		resetEditForm();
+
 		if(data.moves)
 		{
 			$("#editComboMoves").val(data.moves);
@@ -52,25 +58,43 @@ function populateEditForm(comboId)
 		{
 			$("#editComboLink").val(data.link);
 		}
+
 		$("#editComboModal").modal("show");
+
+		$("#editComboForm button").attr("id", newId);
 	});
+}
+
+function resetEditForm()
+{
+	$("#editComboMoves").val("");
+	$("#editComboDamage").val("");
+	$("#editComboMeter").val("");
+	$("#editComboPosition").val("");
+	$("#editComboNotes").val("");
+	$("#editComboLink").val("");
+	$("#editComboForm button").attr("id", "editComboButton");
 }
 
 function sendEdit(context)
 {
-	var comboId = context.id;
-	var newCombo = $("#editComboForm").serialize();
+	var comboId = context.replace("=", "");
+	var updatedCombo = $("#editComboForm").serialize();
 
 	$.ajax(
 	{
 		url: '/api/combos/' + comboId,
 		type: 'PUT',
-		data: newCombo,
+		data: updatedCombo,
 		success: function(res)
 		{
-			renderCombos();
+			$("#editComboModal").modal("hide");
+
+			renderCombos("/api/combos");
 		}
 	});
+
+	return false;
 }
 
 function displayAuth(state)
