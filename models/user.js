@@ -82,8 +82,11 @@ userSchema.statics.authenticate = function(email, password, cb)
 
 userSchema.statics.createCombo = function(user, combo, cb)
 {
-	this.findOne(user.email, function(err, foundUser)
+	// console.log(user);
+	console.log(user.email);
+	this.findOne({email: user.email}, function(err, foundUser)
 	{
+		// console.log(foundUser);
 		foundUser.combos.push(combo);
 		foundUser.save(function(err, success)
 		{

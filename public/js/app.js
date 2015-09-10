@@ -13,23 +13,26 @@ function renderCombos(route)
 		// console.log(data);
 		data.forEach(function(user)
 		{
-			displayCombos = user.combos;
-			displayCombos.forEach(function (combo)
-			{
-				// stretch goal: filter combos per character as well as per game
+			var $user = $(comboTemplate(user));
+			$comboContainer.append($user);
 
-				var $combo = $(comboTemplate(combo));
-				$comboContainer.append($combo);
-			});
+			// displayCombos = user.combos;
+			// displayCombos.forEach(function (combo)
+			// {
+			// 	// stretch goal: filter combos per character as well as per game
+
+			// 	var $combo = $(comboTemplate(combo));
+			// 	$comboContainer.append($combo);
+			// });
 		});
 	});
 }
 
-function populateEditForm(comboId)
+function populateEditForm(contextId)
 {
-	var newId = "="+comboId;
+	var newId = "="+contextId;
 
-	$.get("/api/combos/" + comboId)
+	$.get("/api/combos/" + contextId)
 	.done(function(data)
 	{
 		resetEditForm();
@@ -76,9 +79,9 @@ function resetEditForm()
 	$("#editComboForm button").attr("id", "editComboButton");
 }
 
-function sendEdit(context)
+function sendEdit(contextId)
 {
-	var comboId = context.replace("=", "");
+	var comboId = contextId.replace("=", "");
 	var updatedCombo = $("#editComboForm").serialize();
 
 	$.ajax(
@@ -91,10 +94,33 @@ function sendEdit(context)
 			$("#editComboModal").modal("hide");
 
 			renderCombos("/api/combos");
+		},
+		failure: function(res)
+		{
+			console.log("error sending edit");
 		}
 	});
 
 	return false;
+}
+
+function deleteCombo(contextId)
+{
+	var comboId = contextId.replace("close", "");
+
+	$.ajax(
+	{
+		url: "/api/combos/" + comboId,
+		type: "DELETE",
+		success: function(res)
+		{
+			renderCombos("/api/combos");
+		},
+		failure: function(res)
+		{
+			console.log("delete failed");
+		}
+	});
 }
 
 function displayAuth(state)

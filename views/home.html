@@ -164,17 +164,21 @@
 
 		<div >
 			<script type="text/template" id="comboTemplate">
+				<% _.each(combos, function(combo)
+				{ %>
 				<hr>
 				<div>
-					<%= position ? position : "Position"%> <button type="button" class="btn btn-primary" id=<%= _id %> onclick="return populateEditForm(this.id)">Edit Combo</button></br>
-					<%= moves %> | <%= damage ? damage : "Damage"%> / <%= meter ? meter : "Meter"%></br>
-					<%= notes ? notes : "notes"%></br>
-					<% if(link) { %>
-						<iframe width="560" height="315" src=<%= link %> frameborder="0" allowfullscreen></iframe>
+					<button type="button" class="close" aria-label="Close" id=<%= _id %>close<%= combo._id %> onclick="return deleteCombo(this.id)"><span aria-hidden="true">&times;</span></button>
+					<%= combo.position ? combo.position : "Position"%> <button type="button" class="btn btn-primary" id=<%= _id %>edit<%= combo._id %> onclick="return populateEditForm(this.id)">Edit Combo</button></br>
+					<%= combo.moves %> | <%= combo.damage ? combo.damage : "Damage"%> / <%= combo.meter ? combo.meter : "Meter"%></br>
+					<%= combo.notes ? combo.notes : "notes"%></br>
+					<% if(combo.link) { %>
+						<iframe width="560" height="315" src=<%= combo.link %> frameborder="0" allowfullscreen></iframe>
 					<% } else { %>
 						Add a Video
 					<% } %>
 				</div>
+				<% }) %>
 			</script>
 		</div>
 	</div>

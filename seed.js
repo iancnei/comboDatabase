@@ -64,7 +64,9 @@ var mockCombo2 =
 // 	process.exit(0);
 // });
 
-// db.User.createCombo("user@site.com", mockCombo1, function(err, userCombo)
+var user = {email: "user@site.com"};
+
+// db.User.createCombo(user, mockCombo1, function(err, userCombo)
 // {
 // 	if(err)
 // 	{
@@ -74,11 +76,11 @@ var mockCombo2 =
 // 	else
 // 	{
 // 		console.log(userCombo);
-// 		process.exit(0);
+// 		// process.exit(0);
 // 	}
 // })
 
-// db.User.createCombo("user@site.com", mockCombo2, function(err, userCombo)
+// db.User.createCombo(user, mockCombo2, function(err, userCombo)
 // {
 // 	if(err)
 // 	{
@@ -88,11 +90,11 @@ var mockCombo2 =
 // 	else
 // 	{
 // 		console.log(userCombo);
-// 		process.exit(0);
+// 		// process.exit(0);
 // 	}
 // })
 
-db.User.find({}, function(err, foundUsers)
+db.User.find({position: "Midscreen"}, function(err, foundUsers)
 {
 	if(err) return console.log(err);
 	console.log(foundUsers);

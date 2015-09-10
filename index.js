@@ -40,6 +40,7 @@ app.use(function(req, res, next)
 			else
 			{
 				req.user = foundUser;
+				//console.log(foundUser.email);	
 				cb(null, foundUser);
 			}
 		})
@@ -60,6 +61,10 @@ var views = path.join(process.cwd(), 'views');
 app.get("/", function(req, res)
 {
 	res.sendFile(path.join(views, "home.html"));
+	// if(res.cookie("session") !== undefined || res.cookie("session") !== "foo")
+	// {
+	// 	req.session.userId = user._id;
+	// }
 });
 
 // authenticate cookie against database
@@ -213,41 +218,104 @@ app.put("/api/combos/:id", function(req, res)
 				var updatedCombo = req.body;
 				var wantedId = req.params.id;
 
-				db.User.find({}, function(err, foundUsers)
+				db.User.findOne({_id: currUser._id}, function(err, foundUser)
 				{
-					foundUsers.forEach(function(user)
+					foundUser.combos.forEach(function(combo)
 					{
-						user.combos.forEach(function(combo)
+						if(combo._id.toString() === wantedId)
 						{
-							if(combo._id.toString() === wantedId)
+							combo.moves = updatedCombo.moves;
+							combo.damage = updatedCombo.damage;
+							combo.meter = updatedCombo.meter;
+							combo.position = updatedCombo.position;
+							combo.notes = updatedCombo.notes;
+							combo.link = updatedCombo.link;
+							foundUser.save(function(err, success)
 							{
-								combo.moves = updatedCombo.moves;
-								combo.damage = updatedCombo.damage;
-								combo.meter = updatedCombo.meter;
-								combo.position = updatedCombo.position;
-								combo.notes = updatedCombo.notes;
-								combo.link = updatedCombo.link;
-								user.save(function(err, success)
+								if(err)
 								{
-									if(err)
-									{
-										console.log(err);
-										res.sendStatus(500);
-									}
-									else
-									{
-										// console.log(combo);
-										res.sendStatus(200);
-									}
-								});
-							}
-						});
+									console.log(err);
+									res.sendStatus(500);
+								}
+								else
+								{
+									// console.log(combo);
+									res.sendStatus(200);
+								}
+							});
+						}
 					});
 				});
 			}
 		}
+	});
+});
+
+deleteCombo = function(foundUser, wantedId, cb)
+{
+	for(var i = 0; i < foundUser.combos.length; i++)
+	{
+		if(foundUser.combos[i]._id.toString() === wantedId)
+		{
+			foundUser.combos[i].remove();
+			cb(null, foundUser);
+		}
+	}
+	cb(401, null);
+}
+
+app.delete("/api/combos/:id", function(req, res)
+{
+	req.currentUser(function(err, currUser)
+	{
+		if(err)
+		{
+			console.log(err);
+			res.sendStatus(422);
+		}
+		else
+		{
+			if(!currUser)
+			{
+				res.sendStatus(401);
+			}
+			else
+			{
+				var wantedId = req.params.id;
+				db.User.findOne({_id: currUser._id}, function(err, foundUser)
+				{
+					deleteCombo(foundUser, wantedId, function(err, updatedUser)
+					{
+						if(updatedUser)	
+						{
+							foundUser.save(function(err, success)
+							{
+								if(err)
+								{
+									console.log(err);
+								}
+								else
+								{
+									cb(null, foundUser);
+								}
+							});
+							res.sendStatus(200);
+						}
+						else if(err !== 401 && err !== null)
+						{
+							console.log(err);
+							res.sendStatus(422);
+						}
+						else if(err === 401)
+						{
+							res.sendStatus(401);
+						}
+					})
+				});
+			}
+		}
 	})
-})
+});
 
 var listener = app.listen(3000, function()
 {
