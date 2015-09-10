@@ -16,13 +16,21 @@
 	<link rel='stylesheet' href="/static/css/styles.css"></script>
 </head>
 <body>
-	<div class="container-fluid">
+	<div class="container">
 
 		<h1 class="text-center">Combo Database</h1>
 
-		<button type="button" class="btn btn-primary" id="signInButton" data-toggle="modal" data-target="#signInModal">Sign In</button>
-		<button type="button" class="btn btn-primary" id="signUpButton" data-toggle="modal" data-target="#signUpModal">Sign Up</button>
-		<button type="button" class="btn btn-primary" id="signOutButton">Sign Out</button>
+		<nav class="navbar navbar-default navbar-fixed-top">
+			<div class="container-fluid">
+				<button type="button" class="btn btn-primary navbar-btn" id="addComboButton" data-toggle="modal" data-target="#addComboModal">Add Combo</button>
+				<div id="authButtons" class="pull-right">
+					<button type="button" class="btn btn-primary navbar-btn" id="signInButton" data-toggle="modal" data-target="#signInModal">Sign In</button>
+					<button type="button" class="btn btn-primary navbar-btn" id="signUpButton" data-toggle="modal" data-target="#signUpModal">Sign Up</button>
+					<button type="button" class="btn btn-primary navbar-btn" id="signOutButton">Sign Out</button>
+				</div>
+
+			</div>
+		</nav>
 
 		<div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-labelledby="signInModalLabel">
 			<div class="modal-dialog" role="document">
@@ -157,10 +165,6 @@
 			</div>
 		</div>
 
-		</br>
-	
-		<button type="button" class="btn btn-primary" id="addComboButton" data-toggle="modal" data-target="#addComboModal">Add Combo</button>
-
 		<div id="comboPlaceholder">
 		</div>
 
@@ -169,42 +173,49 @@
 				<% _.each(combos, function(combo)
 				{ %>
 				<hr>
-				<div class="row">
-					<button type="button" class="close" aria-label="Close" id=<%= _id %>close<%= combo._id %> onclick="return deleteCombo(this.id)"><span aria-hidden="true">&times;</span></button>
-					<div class="col-md-12">
-						Position: </br>
-						<%= combo.position ? combo.position : "Position"%> 
-						<button type="button" class="btn btn-primary" id=<%= _id %>edit<%= combo._id %> onclick="return populateEditForm(this.id)">Edit Combo</button></br>
-					</div>
-				</div>
 				</br>
 				<div class="row">
-					<div class="col-md-8">
-						Combo: </br>
-						<%= combo.moves %>
+					<div class="col-md-6">
+						<h2> Combo: </br>
+						<small> <%= combo.moves %> </small> </h2>
 					</div>
 					<div class="col-md-2">
-						Damage: </br>
-						<%= combo.damage ? combo.damage : "Damage"%>
+						<h2>Position: </br>
+						<small><%= combo.position ? combo.position : "-"%></small></h2>
 					</div>
 					<div class="col-md-2">
-						Meter gained: </br>
-					 	<%= combo.meter ? combo.meter : "Meter"%></br>
+						<h2> Damage: </br>
+						<small> <%= combo.damage ? combo.damage : "-"%> </small> </h2>
+					</div>
+					<div class="col-md-2">
+						<h2> Meter: </br>
+					 	<small> <%= combo.meter ? combo.meter : "-"%></br> </small> </h2>
+					</div>
+				</div>
+				</br>
+				<div class="row">
+					<div class="col-md-9">
+						<% if(combo.link) { %>
+							<iframe width="560" height="315" src=<%= combo.link %> frameborder="0" allowfullscreen></iframe>
+						<% } else { %>
+							Add a Video
+						<% } %>
+					</div>
+					<div class="col-md-3">
+						<div class="btn-group" role="group" aria-label="...">
+							<button type="button" class="btn btn-primary" id=<%= _id %>edit<%= combo._id %> onclick="return populateEditForm(this.id)">Edit Combo</button>
+							<button type="button" class="btn btn-primary" id=<%= _id %>close<%= combo._id %> onclick="return deleteCombo(this.id)">Delete Combo</button>
+						</div>
 					</div>
 				</div>
 				</br>
 				<div class="row">
 					<div class="col-md-12">
-						Notes: </br>
-						<%= combo.notes ? combo.notes : "notes"%></br>
+						<h2> Notes: </br>
+						<small> <%= combo.notes ? combo.notes : "-"%></br> </small> </h2>
 					</div>
 				</div>
 				</br>
-					<% if(combo.link) { %>
-						<iframe width="560" height="315" src=<%= combo.link %> frameborder="0" allowfullscreen></iframe>
-					<% } else { %>
-						Add a Video
-					<% } %>
 				<% }) %>
 			</script>
 		</div>

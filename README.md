@@ -10,9 +10,9 @@ An alternative database of combos.
       * Display combos for character
         * ~~toggle move notation for combos~~
         * show videos of combos
-        * show notes/damage/meter *gain/position of combos
-        * ~~reorder combos depending on *damage / meter gain~~
-        * ~~show different routes for the *same combo~~
+        * show notes/damage/meter gain/position of combos
+        * ~~reorder combos depending on damage / meter gain~~
+        * ~~show different routes for the same combo~~
         * ~~show move list of each character~~
           * ~~scrape data from wikis?~~
   * sign up

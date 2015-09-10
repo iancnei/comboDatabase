@@ -59,6 +59,7 @@ var views = path.join(process.cwd(), 'views');
 
 app.get("/", function(req, res)
 {
+	console.log(req.session);
 	res.sendFile( (path.join(views, "home.html")) || "/app/views/home.html");
 });
 
