@@ -15,22 +15,13 @@ function renderCombos(route)
 		{
 			var $user = $(comboTemplate(user));
 			$comboContainer.append($user);
-
-			// displayCombos = user.combos;
-			// displayCombos.forEach(function (combo)
-			// {
-			// 	// stretch goal: filter combos per character as well as per game
-
-			// 	var $combo = $(comboTemplate(combo));
-			// 	$comboContainer.append($combo);
-			// });
 		});
 	});
 }
 
 function populateEditForm(contextId)
 {
-	var newId = "="+contextId;
+	var newId = "=" + contextId;
 
 	$.get("/api/combos/" + contextId)
 	.done(function(data)
@@ -106,11 +97,9 @@ function sendEdit(contextId)
 
 function deleteCombo(contextId)
 {
-	var comboId = contextId.replace("close", "");
-
 	$.ajax(
 	{
-		url: "/api/combos/" + comboId,
+		url: "/api/combos/" + contextId,
 		type: "DELETE",
 		success: function(res)
 		{
@@ -146,7 +135,7 @@ function displayAuth(state)
 // if a 401 (not authorized) request is ever sent, tell the user to login
 $(document).ajaxError(function(e,res){
   if (res.status === 401) {
-     alert("Please Sign In.");
+     alert("You are not authorized to perform that action. Please Sign In.");
   }
 });
 

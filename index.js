@@ -95,7 +95,7 @@ app.get("/api/combos", function(req, res)
 
 app.get("/api/combos/:id", function(req, res)
 {
-	var wantedId = req.params.id;
+	var wantedId = req.params.id.split("edit");
 
 	db.User.find({}, function(err, foundUsers)
 	{
@@ -110,7 +110,7 @@ app.get("/api/combos/:id", function(req, res)
 			{
 				user.combos.forEach(function(combo)
 				{
-					if(combo._id.toString() === wantedId)
+					if(combo._id.toString() === wantedId[1])
 					{
 						res.send(combo);
 					}
@@ -200,6 +200,9 @@ app.post("/api/newCombo", function(req, res)
 
 app.put("/api/combos/:id", function(req, res)
 {
+	ids = req.params.id.split("edit");
+	ownerId = ids[0];
+
 	req.currentUser(function(err, currUser)
 	{
 		if(err)
@@ -215,57 +218,54 @@ app.put("/api/combos/:id", function(req, res)
 			}
 			else
 			{
-				var updatedCombo = req.body;
-				var wantedId = req.params.id;
-
-				db.User.findOne({_id: currUser._id}, function(err, foundUser)
+				if(currUser._id.toString() !== ownerId)
 				{
-					foundUser.combos.forEach(function(combo)
+					res.sendStatus(401);
+				}
+				else
+				{
+					var updatedCombo = req.body;
+					var wantedId = ids[1];
+
+					db.User.findOne({_id: currUser._id}, function(err, foundUser)
 					{
-						if(combo._id.toString() === wantedId)
+						foundUser.combos.forEach(function(combo)
 						{
-							combo.moves = updatedCombo.moves;
-							combo.damage = updatedCombo.damage;
-							combo.meter = updatedCombo.meter;
-							combo.position = updatedCombo.position;
-							combo.notes = updatedCombo.notes;
-							combo.link = updatedCombo.link;
-							foundUser.save(function(err, success)
+							if(combo._id.toString() === wantedId)
 							{
-								if(err)
+								combo.moves = updatedCombo.moves;
+								combo.damage = updatedCombo.damage;
+								combo.meter = updatedCombo.meter;
+								combo.position = updatedCombo.position;
+								combo.notes = updatedCombo.notes;
+								combo.link = updatedCombo.link;
+								foundUser.save(function(err, success)
 								{
-									console.log(err);
-									res.sendStatus(500);
-								}
-								else
-								{
-									// console.log(combo);
-									res.sendStatus(200);
-								}
-							});
-						}
+									if(err)
+									{
+										console.log(err);
+										res.sendStatus(500);
+									}
+									else
+									{
+										// console.log(combo);
+										res.sendStatus(200);
+									}
+								});
+							}
+						});
 					});
-				});
+				}
 			}
 		}
 	});
 });
 
-deleteCombo = function(foundUser, wantedId, cb)
-{
-	for(var i = 0; i < foundUser.combos.length; i++)
-	{
-		if(foundUser.combos[i]._id.toString() === wantedId)
-		{
-			foundUser.combos[i].remove();
-			cb(null, foundUser);
-		}
-	}
-	cb(401, null);
-}
-
 app.delete("/api/combos/:id", function(req, res)
 {
+	ids = req.params.id.split("close");
+	ownerId = ids[0];
+
 	req.currentUser(function(err, currUser)
 	{
 		if(err)
@@ -281,40 +281,42 @@ app.delete("/api/combos/:id", function(req, res)
 			}
 			else
 			{
-				var wantedId = req.params.id;
-				db.User.findOne({_id: currUser._id}, function(err, foundUser)
+				if(currUser._id.toString() !== ownerId)
 				{
-					deleteCombo(foundUser, wantedId, function(err, updatedUser)
+					res.sendStatus(401);
+				}
+				else
+				{
+					var updatedCombo = req.body;
+					var wantedId = ids[1];
+
+					db.User.findOne({_id: currUser._id}, function(err, foundUser)
 					{
-						if(updatedUser)	
+						foundUser.combos.forEach(function(combo, index)
 						{
-							foundUser.save(function(err, success)
+							if(combo._id.toString() === wantedId)
 							{
-								if(err)
+								foundUser.combos.splice(index, 1);
+								foundUser.save(function(err, success)
 								{
-									console.log(err);
-								}
-								else
-								{
-									cb(null, foundUser);
-								}
-							});
-							res.sendStatus(200);
-						}
-						else if(err !== 401 && err !== null)
-						{
-							console.log(err);
-							res.sendStatus(422);
-						}
-						else if(err === 401)
-						{
-							res.sendStatus(401);
-						}
-					})
-				});
+									if(err)
+									{
+										console.log(err);
+										res.sendStatus(500);
+									}
+									else
+									{
+										// console.log(combo);
+										res.sendStatus(200);
+									}
+								});
+							}
+						});
+					});
+				}
 			}
 		}
-	})
+	});
 });
 
 var listener = app.listen(3000, function()
