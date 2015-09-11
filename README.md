@@ -1,5 +1,5 @@
 # COMBO DATABASE
-An alternative database app for creating, storing and editing combos of fighting games.
+An alternative database app for creating, storing, and editing combos of fighting games.
 
 Heroku Link: https://combo-database.herokuapp.com
 
@@ -17,7 +17,7 @@ Heroku Link: https://combo-database.herokuapp.com
 ~~Strikethrough items~~ are stretch items that will become normal text when realized.
 * ~~Display game~~
   * ~~Display game systems~~
-    * ~~Display characters~~c
+    * ~~Display characters~~
       * Display combos for character
         * ~~toggle move notation for combos~~
         * show videos of combos
@@ -36,7 +36,7 @@ Heroku Link: https://combo-database.herokuapp.com
           * write move notation
           * designate notation, damage, meter gain, additional notes
           * edit combos of your own ~~and others~~
-          * add videos of combos (youtube/nico embed link)
+          * add videos of combos (youtube~~/nico embed link~~)
           * remove combos
   * logout
 
@@ -68,7 +68,7 @@ A user should be able to:
         * notes: string
         * youtube links: string
         * ~~optimization requests~~
-          * ~~[reference to request in user] // when you log in display requests // when approced can replace the original move~~
+          * ~~[reference to request in user] // when you log in display requests // when approved can replace the original move~~
 
 2. Users
    * name: string
