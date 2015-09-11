@@ -2,6 +2,19 @@ body {
 	padding-top: 70px;
 }
 
+.navbar .divider-vertical {
+height: 50px;
+margin: 0 9px;
+border-left: 1px solid #F2F2F2;
+border-right: 1px solid #FFF;
+}
+
+@media (max-width: 767px) {
+.navbar-collapse .nav > .divider-vertical {
+    display: none;
+  }
+}
+
 .col-md-3 {
 	line-height: 322px;
 	vertical-align: middle;

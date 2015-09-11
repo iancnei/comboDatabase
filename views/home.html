@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Combo Database</title>
+	<title>Guilty Gear Xrd -SIGN- / Sol Badguy / Combos</title>
 
 	<script src='/vendor/jquery/dist/jquery.min.js'></script>
 	<script src='/vendor/jquery.cookie/jquery.cookie.js'></script>
@@ -18,16 +18,56 @@
 <body>
 	<div class="container">
 
-		<h1 class="text-center">Combo Database</h1>
+		<h1 class="text-center">Sol Badguy</h1>
 
 		<nav class="navbar navbar-default navbar-fixed-top">
 			<div class="container-fluid">
-				<button type="button" class="btn btn-primary navbar-btn" id="addComboButton" data-toggle="modal" data-target="#addComboModal">Add Combo</button>
-				<div id="authButtons" class="pull-right">
-					<button type="button" class="btn btn-primary navbar-btn" id="signInButton" data-toggle="modal" data-target="#signInModal">Sign In</button>
-					<button type="button" class="btn btn-primary navbar-btn" id="signUpButton" data-toggle="modal" data-target="#signUpModal">Sign Up</button>
-					<button type="button" class="btn btn-primary navbar-btn" id="signOutButton">Sign Out</button>
-				</div>
+				<ul class="nav navbar-nav">
+					<li><p class="navbar-text">Navigation: </p></li>
+					<li class="dropdown">
+			        	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Guilty Gear Xrd -SIGN- <span class="caret"></span></a>
+			        	<ul class="dropdown-menu">
+			        		<li><a href="#">Games</a></li>
+			        		<li role="separator" class="divider"></li>
+				            <li><a href="#">Guilty Gear Xrd -SIGN</a></li>
+				            <li><a href="#">Blazblue Chrono Phantasma Extend</a></li>
+				            <li><a href="#">Under Night In-Birth Exe:Late</a></li>
+			          	</ul>
+			        </li>
+			        <li class="dropdown">
+			        	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Sol Badguy <span class="caret"></span></a>
+			        	<ul class="dropdown-menu">
+			        		<li><a href="#">Characters</a></li>
+			        		<li role="separator" class="divider"></li>
+				            <li><a href="#">Sol Badguy</a></li>
+				            <li><a href="#">Ky Kiske</a></li>
+				            <li><a href="#">Millia Rage</a></li>
+			          	</ul>
+			        </li>
+			        <li class="dropdown">
+			        	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Combos <span class="caret"></span></a>
+			        	<ul class="dropdown-menu">
+			        		<li><a href="#">Navigation</a></li>
+			        		<li role="separator" class="divider"></li>
+				            <li><a href="#">Overview</a></li>
+				            <li><a href="#">Move List</a></li>
+				            <li><a href="#">Combos</a></li>
+				            <li><a href="#">Strategy</a></li>
+				            <li><a href="#">Frame Data</a></li>
+			          	</ul>
+			        </li>
+			        <li class="navbar divider-vertical"></li>
+			        <li><p class="navbar-text">Contribute to the Database: </p></li>
+			        <li><button type="button" class="btn btn-primary navbar-btn" id="addComboButton" data-toggle="modal" data-target="#addComboModal">Add Combo</button></li>
+			        <li class="navbar divider-vertical"></li>
+			    </ul>
+			    
+				<ul class="nav navbar-nav navbar-right" id="authButtons">
+					<li><button type="button" class="btn btn-primary navbar-btn" id="signInButton" data-toggle="modal" data-target="#signInModal">Sign In</button></li>
+					<li><button type="button" class="btn btn-primary navbar-btn" id="signUpButton" data-toggle="modal" data-target="#signUpModal">Sign Up</button></li>
+					<li><button type="button" class="btn btn-primary navbar-btn" id="profileButton">View Profile</button></li>
+					<li><button type="button" class="btn btn-primary navbar-btn" id="signOutButton">Sign Out</button></li>
+				</li>
 
 			</div>
 		</nav>
@@ -50,7 +90,7 @@
 								<input type="password" class="form-control" id="signInPassword" placeholder="Password" name="password" required >
 							</div>
 							<div class="checkbox">
-								<label>
+								<label> 
 									<input type="checkbox" id="rememberMe"> Remember Me
 								</label>
 							</div>
@@ -98,7 +138,7 @@
 							<h4 class="modal-title" id="addComboModalLabel">Add a Combo</h4>
 						</div>
 						<div class="modal-body">
-							<h2 class="text-center">Plant Another Flower in God's Garden</h2>
+							<h2 class="text-center">Share Your Ideas with the World</h2>
 							<br>
 							<div class="form-group">
 								<input type="text" class="form-control" id="addComboMoves" placeholder="Combo" name="moves" required >
@@ -136,7 +176,7 @@
 							<h4 class="modal-title" id="editComboModalLabel">Edit a Combo</h4>
 						</div>
 						<div class="modal-body">
-							<h2 class="text-center">Prune a Flower in God's Garden</h2>
+							<h2 class="text-center">Refine the Ideas of Others</h2>
 							<br>
 							<div class="form-group">
 								<input type="text" class="form-control" id="editComboMoves" placeholder="Combo" name="moves" required >

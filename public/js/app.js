@@ -119,6 +119,7 @@ function displayAuth(state, email)
 		$("#signInForm p").remove();
 		$("#signInButton").show();
 		$("#signUpButton").show();
+		$("#profileButton").hide();
 		$("#signOutButton").hide();
 		$("#signInForm")[0].reset();
 		$("#signUpForm")[0].reset();
@@ -126,11 +127,12 @@ function displayAuth(state, email)
 	}
 	else if(state === "in")
 	{
+		$("#profileButton").show();
 		$("#signOutButton").show();
 		$("#signInButton").hide();
 		$("#signUpButton").hide();
 		$("#signOutForm p").remove();
-		$("#authButtons").append("<p class='navbar-text'>" + email + "</p>");
+		$("#authButtons").prepend("<p class='navbar-text'>Welcome Back " + email + " </p>");
 	}
 }
 
