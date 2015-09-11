@@ -1,12 +1,23 @@
-# Combo Database
-An alternative database of combos.
+# COMBO DATABASE
+An alternative database app for creating, storing and editing combos of fighting games.
 
+Heroku Link: https://combo-database.herokuapp.com
+
+## TECHNOLOGIES USED
+* HTML5
+* Jquery
+* Express
+* MongoDB
+* Underscore
+* Bcrypt
+* AJAX
+* Bootstrap
+
+## FEATURES
 ~~Strikethrough items~~ are stretch items that will become normal text when realized.
-
-## Features
 * ~~Display game~~
   * ~~Display game systems~~
-    * ~~Display characters~~
+    * ~~Display characters~~c
       * Display combos for character
         * ~~toggle move notation for combos~~
         * show videos of combos
@@ -29,7 +40,7 @@ An alternative database of combos.
           * remove combos
   * logout
 
-## User Stories  
+## USER STORIES
 A user should be able to:
    * signup
    * login
@@ -46,7 +57,7 @@ A user should be able to:
    * ~~see an image of each move when moused over or highlighted~~
    * ~~see a full movelist of a character~~
 
-## Modeling			   
+## MONGODB MODELING
 1. Game
    * Character
      * Combos
@@ -65,5 +76,3 @@ A user should be able to:
    * Combos
      * [combo] // embed combos rather than references
    * ~~optimization requests: string~~
-
-// use bootstrap accordion to move things down and focus
