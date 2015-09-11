@@ -134,7 +134,8 @@ app.post("/api/signUp", function(req, res)
 			// });
 			req.signIn(createdUser);
 			console.log(req.session);
-			res.sendStatus(200);
+			// res.sendStatus(200);
+			res.send(createdUser);
 		}
 	});
 });
@@ -154,7 +155,8 @@ app.post("/api/signIn", function(req, res)
 			req.signIn(authUser);
 			// res.redirect("/profile");
 			console.log(req.session);
-			res.sendStatus(200);
+			// res.sendStatus(200);
+			res.send(authUser);
 		}
 	});
 });

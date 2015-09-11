@@ -112,7 +112,7 @@ function deleteCombo(contextId)
 	});
 }
 
-function displayAuth(state)
+function displayAuth(state, email)
 {
 	if(state === "out")
 	{
@@ -122,6 +122,7 @@ function displayAuth(state)
 		$("#signOutButton").hide();
 		$("#signInForm")[0].reset();
 		$("#signUpForm")[0].reset();
+		$("#authButtons p").remove();
 	}
 	else if(state === "in")
 	{
@@ -129,6 +130,7 @@ function displayAuth(state)
 		$("#signInButton").hide();
 		$("#signUpButton").hide();
 		$("#signOutForm p").remove();
+		$("#authButtons").append("<p class='navbar-text'>" + email + "</p>");
 	}
 }
 
@@ -160,8 +162,9 @@ $(function () {
 		.done(
 			function(response)
 			{
+				console.log(response);
 				$("#signInModal").modal("hide");
-				displayAuth("in");
+				displayAuth("in", response.email);
 
 				if(!$("#rememberMe").prop("checked"))
 				{
@@ -183,8 +186,9 @@ $(function () {
 		$.post("/api/signUp", $(this).serialize())
 		.done(function(response)
 			{
+				console.log(response);
 				$("#signUpModal").modal("hide");
-				displayAuth("in");
+				displayAuth("in", response.email);
 
 				$.removeCookie('session');
 			});
@@ -197,7 +201,7 @@ $(function () {
 		$.get("/api/signOut")
 		.done(function()
 			{
-				displayAuth("out");
+				displayAuth("out", null);
 			});
 	});
 
