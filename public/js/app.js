@@ -143,6 +143,11 @@ $(document).ajaxError(function(e,res){
   }
 });
 
+function alertUser()
+{
+	alert("The link you are trying to click on is still under construction. Thank you for your patience =) ");
+}
+
 // when document is ready
 $(function () {
 	renderCombos("/api/combos");
