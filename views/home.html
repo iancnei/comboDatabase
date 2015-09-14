@@ -182,10 +182,10 @@
 								<input type="text" class="form-control" id="editComboMoves" placeholder="Combo" name="moves" required >
 							</div>
 							<div>
-								<input type="text" class="form-control" id="editComboDamage" placeholder="Damage" name="damage" >
+								<input type="text" class="form-control" id="editComboDamage" placeholder="Damage (numbers only)" name="damage" >
 							</div>
 							<div>
-								<input type="text" class="form-control" id="editComboMeter" placeholder="Meter" name="meter">
+								<input type="text" class="form-control" id="editComboMeter" placeholder="Meter (numbers only)" name="meter">
 							</div>
 							<div>
 								<input type="text" class="form-control" id="editComboPosition" placeholder="Position" name="position">
@@ -236,6 +236,9 @@
 				<div class="row">
 					<div class="col-md-9">
 						<% if(combo.link) { %>
+							<% //var youtubeLink = combo.link.splice
+							// <iframe width="420" height="315" src="https://www.youtube.com/embed/rPqtYWIXsAs" frameborder="0" allowfullscreen></iframe>
+							// https://youtu.be/rPqtYWIXsAs %>
 							<iframe width="560" height="315" src=<%= combo.link %> frameborder="0" allowfullscreen></iframe>
 						<% } else { %>
 							Add a Video

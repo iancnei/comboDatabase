@@ -179,6 +179,9 @@ app.post("/api/newCombo", function(req, res)
 			else
 			{
 				combo = req.body;
+				combo.damage = combo.damage.replace(/\D+/g,"");
+				combo.meter = combo.meter.replace(/\D+/g,"");
+
 				db.User.createCombo(currUser, combo, function(err, userCombo)
 				{
 					if(err)
@@ -240,7 +243,7 @@ app.put("/api/combos/:id", function(req, res)
 								foundUser.save(function(err, success)
 								{
 									if(err)
-									{
+ 									{
 										console.log(err);
 										res.sendStatus(500);
 									}
