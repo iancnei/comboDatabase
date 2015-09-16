@@ -84,9 +84,11 @@
 							<h2 class="text-center">Welcome Back to the Stage of History</h2>
 							<br>
 							<div class="form-group">
+								<label for="signInEmail" class="control-label">Email</label>
 								<input type="email" class="form-control" id="signInEmail" placeholder="Email" name="email" required >
 							</div>
 							<div class="form-group">
+								<label for="signInPassword" class="control-label">Password</label>
 								<input type="password" class="form-control" id="signInPassword" placeholder="Password" name="password" required >
 							</div>
 							<div class="checkbox">
@@ -115,9 +117,11 @@
 							<h2 class="text-center">Join the Ranks of the World Warriors</h2>
 							<br>
 							<div class="form-group">
+								<label for="signUpEmail" class="control-label">Email</label>
 								<input type="email" class="form-control" id="signUpEmail" placeholder="Email" name="email" required >
 							</div>
 							<div class="form-group">
+								<label for="signUpPassword" class="control-label">Password</label>
 								<input type="password" class="form-control" id="signUpPassword" placeholder="Password" name="password" required >
 							</div>
 						</div>
@@ -141,22 +145,28 @@
 							<h2 class="text-center">Share Your Ideas with the World</h2>
 							<br>
 							<div class="form-group">
+								<label for="addComboMoves" class="control-label">Combo</label>
 								<input type="text" class="form-control" id="addComboMoves" placeholder="Combo" name="moves" required >
 							</div>
 							<div>
+								<label for="addComboMoves" class="control-label">Damage</label>
 								<input type="text" class="form-control" id="addComboDamage" placeholder="Damage" name="damage" >
 							</div>
 							<div>
+								<label for="addComboMeter" class="control-label">Meter</label>
 								<input type="text" class="form-control" id="addComboMeter" placeholder="Meter" name="meter">
 							</div>
 							<div>
+								<label for="addComboPosition" class="control-label">Position</label>
 								<input type="text" class="form-control" id="addComboPosition" placeholder="Position" name="position">
 							</div>
 							<div>
+								<label for="addComboNotes" class="control-label">Notes</label>
 								<input type="text" class="form-control" id="addComboNotes" placeholder="Notes" name="notes">
 							</div>
 							<div>
-								<input type="text" class="form-control" id="addComboLink" placeholder="Link" name="link">
+								<label for="addComboLink" class="control-label">Youtube Link</label>
+								<input type="text" class="form-control" id="addComboLink" placeholder="Youtube Link" name="link">
 							</div>
 						</div>
 						<div class="modal-footer">
@@ -179,21 +189,27 @@
 							<h2 class="text-center">Refine Your Ideas</h2>
 							<br>
 							<div class="form-group">
+								<label for="editComboMoves" class="control-label">Combo</label>
 								<input type="text" class="form-control" id="editComboMoves" placeholder="Combo" name="moves" required >
 							</div>
 							<div>
+								<label for="editComboMoves" class="control-label">Damage</label>
 								<input type="text" class="form-control" id="editComboDamage" placeholder="Damage (numbers only)" name="damage" >
 							</div>
 							<div>
+								<label for="editComboMeter" class="control-label">Meter</label>
 								<input type="text" class="form-control" id="editComboMeter" placeholder="Meter (numbers only)" name="meter">
 							</div>
 							<div>
+								<label for="editComboPosition" class="control-label">Position</label>
 								<input type="text" class="form-control" id="editComboPosition" placeholder="Position" name="position">
 							</div>
 							<div>
+								<label for="editComboNotes" class="control-label">Notes</label>
 								<input type="text" class="form-control" id="editComboNotes" placeholder="Notes" name="notes">
 							</div>
 							<div>
+								<label for="editComboLink" class="control-label">Youtube Link</label>
 								<input type="text" class="form-control" id="editComboLink" placeholder="Link" name="link">
 							</div>
 						</div>
@@ -236,9 +252,6 @@
 				<div class="row">
 					<div class="col-md-9">
 						<% if(combo.link) { %>
-							<% //var youtubeLink = combo.link.splice
-							// <iframe width="420" height="315" src="https://www.youtube.com/embed/rPqtYWIXsAs" frameborder="0" allowfullscreen></iframe>
-							// https://youtu.be/rPqtYWIXsAs %>
 							<iframe width="560" height="315" src=<%= combo.link %> frameborder="0" allowfullscreen></iframe>
 						<% } else { %>
 							Add a Video

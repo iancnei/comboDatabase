@@ -19,6 +19,72 @@ function renderCombos(route)
 	});
 }
 
+function parseYoutubeLink(ytLink)
+{
+	var embedLink = ytLink.slice(ytLink.lastIndexOf("/") + 1);
+	var embedSeconds = null;
+	var ytTimeIndex = null;
+	// bool to determine if the parameter is preceded by an & or an ?
+	var ampBool = false;
+
+	if(embedLink.indexOf("&t=") !== -1)
+	{
+		ytTimeIndex = embedLink.indexOf("&t=");
+		ampBool = true;
+	}
+	else if (embedLink.indexOf("?t=") !== -1 )
+	{
+		ytTimeIndex = embedLink.indexOf("?t=");
+	}
+
+	if(ytTimeIndex)
+	{
+		var embedTime = embedLink.slice(ytTimeIndex + 1);
+
+		// check if there are minutes and convert them into seconds
+		// need to check in case of a pure second time display
+		embedSeconds = parseInt(embedTime.slice(embedTime.indexOf("s") - 2, embedTime.indexOf("s")));
+		if(embedTime.indexOf("m") !== -1)
+		{
+			embedMinutes = embedTime.slice(embedTime.indexOf("m") - 1, embedTime.indexOf("m") + 1);
+			embedMinutes = parseInt(embedMinutes) * 60;
+			embedSeconds += embedMinutes;
+		}
+		// console.log(embedSeconds);
+		if(ampBool)
+		{
+			embedLink = embedLink.substring(0, embedLink.indexOf("&t="));
+		}
+		else
+		{
+			embedLink = embedLink.substring(0, embedLink.indexOf("?t="));
+		}
+		// console.log("after time stamp check", embedLink);
+	}
+
+	var ytVideoIndex = embedLink.indexOf("v=");
+	var ytAmpersandIndex = embedLink.indexOf("&");
+	if(ytVideoIndex !== -1)
+	{
+		if(ytAmpersandIndex !== -1)
+		{
+			embedLink = embedLink.slice(ytVideoIndex + 2, ytAmpersandIndex);
+		}
+		else
+		{
+			embedLink = embedLink.slice(ytVideoIndex + 2);	
+		}
+		// console.log("after 'v=' check", embedLink);
+	}
+
+	if(embedSeconds)
+	{
+		embedLink = embedLink + "?start=" + embedSeconds;
+	}
+
+	return embedLink;
+}
+
 function populateEditForm(contextId)
 {
 	var newId = "=" + contextId;
