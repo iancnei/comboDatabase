@@ -178,6 +178,13 @@ function deleteCombo(contextId)
 	});
 }
 
+function displayComboDetails(contextId)
+{
+	id = "#collapse" + contextId.replace("combo", "");
+	console.log(id);
+	$(id).collapse('toggle');
+}
+
 function displayAuth(state, email)
 {
 	if(state === "out")

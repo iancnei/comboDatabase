@@ -69,6 +69,19 @@ db.User.remove({}, function(err, removedUsers)
 				// process.exit(0);
 			}
 		})
+		db.User.createCombo(user, mockCombo2, function(err, userCombo)
+		{
+			if(err)
+			{
+				console.log(err);
+				process.exit(0);
+			}
+			else
+			{
+				console.log(userCombo);
+				// process.exit(0);
+			}
+		})
 	});
 });
 

@@ -230,7 +230,7 @@
 				{ %>
 				<hr>
 				</br>
-				<div class="row">
+				<div class="row" id="combo<%= combo._id %>" onclick="return displayComboDetails(this.id)">
 					<div class="col-md-6">
 						<h2> <u>Combo</u> </br>
 						<small> <%= combo.moves %> </small> </h2>
@@ -249,26 +249,30 @@
 					</div>
 				</div>
 				</br>
-				<div class="row">
-					<div class="col-md-9">
-						<% if(combo.link) { %>
-							<iframe width="560" height="315" src=<%= combo.link %> frameborder="0" allowfullscreen></iframe>
-						<% } else { %>
-							Add a Video
-						<% } %>
-					</div>
-					<div class="col-md-3">
-						<div class="btn-group" role="group" aria-label="...">
-							<button type="button" class="btn btn-primary" id=<%= _id %>edit<%= combo._id %> onclick="return populateEditForm(this.id)">Edit Combo</button>
-							<button type="button" class="btn btn-primary" id=<%= _id %>close<%= combo._id %> onclick="return deleteCombo(this.id)">Delete Combo</button>
+				<div class="collapse" id="collapse<%= combo._id %>" >
+					<div class="well">
+						<div class="row">
+							<div class="col-md-9">
+								<% if(combo.link) { %>
+									<iframe width="560" height="315" src=<%= combo.link %> frameborder="0" allowfullscreen></iframe>
+								<% } else { %>
+									Add a Video
+								<% } %>
+							</div>
+							<div class="col-md-3">
+								<div class="btn-group" role="group" aria-label="...">
+									<button type="button" class="btn btn-primary" id=<%= _id %>edit<%= combo._id %> onclick="return populateEditForm(this.id)">Edit Combo</button>
+									<button type="button" class="btn btn-primary" id=<%= _id %>close<%= combo._id %> onclick="return deleteCombo(this.id)">Delete Combo</button>
+								</div>
+							</div>
 						</div>
-					</div>
-				</div>
-				</br>
-				<div class="row">
-					<div class="col-md-12">
-						<h2> <u> Notes</u> </br>
-						<small> <%= combo.notes ? combo.notes : "-"%></br> </small> </h2>
+						</br>
+						<div class="row">
+							<div class="col-md-12">
+								<h2> <u> Notes</u> </br>
+								<small> <%= combo.notes ? combo.notes : "-"%></br> </small> </h2>
+							</div>
+						</div>
 					</div>
 				</div>
 				</br>
